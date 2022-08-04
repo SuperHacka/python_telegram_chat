@@ -1,0 +1,7 @@
+# python-telegram-bot
+httpx ~= 0.23.0
+tornado~=6.1
+cachetools~=5.2.0
+APScheduler~=3.9.1
+Flask
+requests
