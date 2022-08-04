@@ -41,6 +41,26 @@ def tel_send_video(chat_id):
     return r
 
 
+def tel_send_inlineurl(chat_id):
+    url = f'https://api.telegram.org/bot{TOKEN}/sendMessage'
+
+    payload = {
+        'chat_id': chat_id,
+        'text': "Which link would you like to visit?",
+        'reply_markup': {
+            "inline_keyboard": [
+                [
+                    {"text": "google", "url": "http://www.google.com/"},
+                    {"text": "youtube", "url": "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley"}
+                ]
+            ]
+        }
+    }
+
+    r = requests.post(url, json=payload)
+
+    return r
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
@@ -49,6 +69,13 @@ def index():
         chat_id, txt = parse_message(msg)
         if "hi" in txt:
             tel_send_message(chat_id, "Hello welcome to the telegram bot")
+
+        elif "video" in txt:
+            tel_send_video(chat_id)
+            # tel_send_message(chat_id, "https://www.youtube.com/watch?v=dQw4w9WgXcQ&ab_channel=RickAstley")
+        elif "url" in txt:
+            tel_send_inlineurl(chat_id)
+
         else:
             tel_send_message(chat_id, "Sorry couldn't quite catch that")
 
